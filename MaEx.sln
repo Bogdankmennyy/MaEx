@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaEx", "MaEx\MaEx.csproj", "{8002F793-5776-4A0B-9169-8EFBBA6890A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8002F793-5776-4A0B-9169-8EFBBA6890A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8002F793-5776-4A0B-9169-8EFBBA6890A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8002F793-5776-4A0B-9169-8EFBBA6890A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8002F793-5776-4A0B-9169-8EFBBA6890A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E99E506-F293-480A-A711-67C7297E730D}
+	EndGlobalSection
+EndGlobal
