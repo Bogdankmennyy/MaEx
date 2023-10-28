@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c1d0ed902f6477ca5e1edc0ce26d9b3" Name="Diagram1">
+        <EntityTypeShape EntityType="MarketExchangeDBModel.Advertisements" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketExchangeDBModel.Favorites" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketExchangeDBModel.LoginSessions" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketExchangeDBModel.Messages" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketExchangeDBModel.UserAccounts" Width="1.5" PointX="5.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketExchangeDBModel.Users" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__Advertise__UserI__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__Favorites__AdID__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__Favorites__UserI__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__LoginSess__UserI__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__Messages__Receiv__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketExchangeDBModel.FK__Messages__Sender__571DF1D5" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

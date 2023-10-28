@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MarketExchangeDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advertisements">
+          <Key>
+            <PropertyRef Name="AdID" />
+          </Key>
+          <Property Name="AdID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PostedDate" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="FavoriteID" />
+          </Key>
+          <Property Name="FavoriteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="AdID" Type="int" />
+        </EntityType>
+        <EntityType Name="LoginSessions">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="LoginTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="SentDate" Type="datetime" />
+          <Property Name="SenderID" Type="int" />
+          <Property Name="ReceiverID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserAccounts">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Advertise__UserI__4BAC3F29">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Advertisements" Type="Self.Advertisements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Advertisements">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorites__AdID__5441852A">
+          <End Role="Advertisements" Type="Self.Advertisements" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advertisements">
+              <PropertyRef Name="AdID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="AdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorites__UserI__534D60F1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginSess__UserI__5070F446">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="0..1" />
+          <End Role="LoginSessions" Type="Self.LoginSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LoginSessions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Receiv__5812160E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Sender__571DF1D5">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MarketExchangeDBModelContainer">
+          <EntitySet Name="Advertisements" EntityType="Self.Advertisements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginSessions" EntityType="Self.LoginSessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Advertise__UserI__4BAC3F29" Association="Self.FK__Advertise__UserI__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Advertisements" EntitySet="Advertisements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorites__AdID__5441852A" Association="Self.FK__Favorites__AdID__5441852A">
+            <End Role="Advertisements" EntitySet="Advertisements" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorites__UserI__534D60F1" Association="Self.FK__Favorites__UserI__534D60F1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginSess__UserI__5070F446" Association="Self.FK__LoginSess__UserI__5070F446">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="LoginSessions" EntitySet="LoginSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Receiv__5812160E" Association="Self.FK__Messages__Receiv__5812160E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Sender__571DF1D5" Association="Self.FK__Messages__Sender__571DF1D5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MarketExchangeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Advertisements">
+          <Key>
+            <PropertyRef Name="AdID" />
+          </Key>
+          <Property Name="AdID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PostedDate" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Advertise__UserI__4BAC3F29" FromRole="Advertisements" ToRole="Users" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK__Favorites__AdID__5441852A" FromRole="Advertisements" ToRole="Favorites" />
+        </EntityType>
+        <EntityType Name="Favorites">
+          <Key>
+            <PropertyRef Name="FavoriteID" />
+          </Key>
+          <Property Name="FavoriteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="AdID" Type="Int32" />
+          <NavigationProperty Name="Advertisements" Relationship="Self.FK__Favorites__AdID__5441852A" FromRole="Favorites" ToRole="Advertisements" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Favorites__UserI__534D60F1" FromRole="Favorites" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="LoginSessions">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserAccounts" Relationship="Self.FK__LoginSess__UserI__5070F446" FromRole="LoginSessions" ToRole="UserAccounts" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SentDate" Type="DateTime" Precision="3" />
+          <Property Name="SenderID" Type="Int32" />
+          <Property Name="ReceiverID" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Messages__Receiv__5812160E" FromRole="Messages" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="Self.FK__Messages__Sender__571DF1D5" FromRole="Messages" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserAccounts">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LoginSessions" Relationship="Self.FK__LoginSess__UserI__5070F446" FromRole="UserAccounts" ToRole="LoginSessions" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Advertisements" Relationship="Self.FK__Advertise__UserI__4BAC3F29" FromRole="Users" ToRole="Advertisements" />
+          <NavigationProperty Name="Favorites" Relationship="Self.FK__Favorites__UserI__534D60F1" FromRole="Users" ToRole="Favorites" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__Receiv__5812160E" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="Messages1" Relationship="Self.FK__Messages__Sender__571DF1D5" FromRole="Users" ToRole="Messages" />
+        </EntityType>
+        <Association Name="FK__Advertise__UserI__4BAC3F29">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Advertisements" Type="Self.Advertisements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Advertisements">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorites__AdID__5441852A">
+          <End Role="Advertisements" Type="Self.Advertisements" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advertisements">
+              <PropertyRef Name="AdID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="AdID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Favorites__UserI__534D60F1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Favorites" Type="Self.Favorites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginSess__UserI__5070F446">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="0..1" />
+          <End Role="LoginSessions" Type="Self.LoginSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LoginSessions">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Receiv__5812160E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Messages__Sender__571DF1D5">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MarketExchangeDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Advertisements" EntityType="Self.Advertisements" />
+          <EntitySet Name="Favorites" EntityType="Self.Favorites" />
+          <EntitySet Name="LoginSessions" EntityType="Self.LoginSessions" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Advertise__UserI__4BAC3F29" Association="Self.FK__Advertise__UserI__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Advertisements" EntitySet="Advertisements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorites__AdID__5441852A" Association="Self.FK__Favorites__AdID__5441852A">
+            <End Role="Advertisements" EntitySet="Advertisements" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Favorites__UserI__534D60F1" Association="Self.FK__Favorites__UserI__534D60F1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Favorites" EntitySet="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginSess__UserI__5070F446" Association="Self.FK__LoginSess__UserI__5070F446">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="LoginSessions" EntitySet="LoginSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Receiv__5812160E" Association="Self.FK__Messages__Receiv__5812160E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__Sender__571DF1D5" Association="Self.FK__Messages__Sender__571DF1D5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MarketExchangeDBModelContainer" CdmEntityContainer="MarketExchangeDBEntities">
+          <EntitySetMapping Name="Advertisements">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.Advertisements">
+              <MappingFragment StoreEntitySet="Advertisements">
+                <ScalarProperty Name="AdID" ColumnName="AdID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PostedDate" ColumnName="PostedDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favorites">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.Favorites">
+              <MappingFragment StoreEntitySet="Favorites">
+                <ScalarProperty Name="FavoriteID" ColumnName="FavoriteID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="AdID" ColumnName="AdID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginSessions">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.LoginSessions">
+              <MappingFragment StoreEntitySet="LoginSessions">
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="SentDate" ColumnName="SentDate" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.UserAccounts">
+              <MappingFragment StoreEntitySet="UserAccounts">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MarketExchangeDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
