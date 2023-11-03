@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-using System.Collections;
+
+
+
+
 
 
 
@@ -33,37 +26,54 @@ namespace MaEx
         AdList.ItemsSource = Advertisements;
     }
 
-    private void CreateAdButton_Click(object sender, RoutedEventArgs e)
-    {
-        // Получаем данные из текстовых полей
-        string title = CreateAdForm.Children[0].ToString();
-        string price = CreateAdForm.Children[1].ToString();
-        string description = CreateAdForm.Children[2].ToString();
-
-        // Создаем новое объявление
-        Advertisement newAd = new Advertisement
+        private void CreateAdButton_Click(object sender, RoutedEventArgs e)
         {
-            Title = title,
-            Price = price,
-            Description = description,
-            PostedDate = DateTime.Now
-        };
+            // Получаем данные из текстовых полей
+            string title = CreateAdForm.Children[0].ToString();
+            string price = CreateAdForm.Children[1].ToString();
+            string description = CreateAdForm.Children[2].ToString();
 
-        // Добавляем объявление в список
-        Advertisements.Add(newAd);
-
-        // Очищаем текстовые поля
-        foreach (var element in CreateAdForm.Children)
-        {
-            if (element is TextBox textBox)
+            // Создаем новое объявление
+            Advertisements newAd = new Advertisements
             {
-                textBox.Clear();
-            }
-        }
-    }
-}
+                Title = title,
+                //Price = price,
+                Description = description,
+                PostedDate = DateTime.Now
+            };
 
-public class Advertisement
+            // Добавляем объявление в базу данных
+            var context = new MarketExchangeDBEntities();
+            context.Advertisements.Add(newAd);
+            context.SaveChanges();
+
+            // Очищаем текстовые поля
+            foreach (var element in CreateAdForm.Children)
+            {
+                if (element is TextBox textBox)
+                {
+                    textBox.Clear();
+                }
+            }
+
+            // Обновляем список объявлений в ListView
+            AdList.ItemsSource = context.Advertisements.ToList();
+        }
+
+
+
+
+
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            MainFrame.Navigate(new Uri("registration.xaml", UriKind.Relative));
+        }
+
+    }
+
+    public class Advertisement
 {
     public string Title { get; set; }
     public string Price { get; set; }
@@ -72,7 +82,16 @@ public class Advertisement
 }
 
 
+    public class User
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        
+    }
 
 
-    
+
+
+
 }

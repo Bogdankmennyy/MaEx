@@ -15,7 +15,7 @@ namespace MaEx
     
     public partial class MarketExchangeDBEntities : DbContext
     {
-        private static MarketExchangeDBEntities _context;
+        public static MarketExchangeDBEntities _context;
 
         public MarketExchangeDBEntities()
             : base("name=MarketExchangeDBEntities")
